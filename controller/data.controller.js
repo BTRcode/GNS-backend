@@ -2,6 +2,27 @@
 const Domain = require('../models/Domain.js')
 const Data = require('../models/Data.js')
 
+
+exports.createDomain = async (req,res) => {
+    try {
+        const _isExist = await Domain.findOne({
+            where: {
+                Domain_name: req.body.nameHash,
+            }
+    })
+    if(!_isExist){
+        await Domain.create({
+            Domain_name : req.body.nameHash
+        })
+        return res.send("Domain name added successfully")
+    }else{
+        res.send("Domain name already exists")
+    }
+    }catch (error) {
+        console.log("Error in creating the Domain")
+    }
+}
+
 exports.getDomainId = async(req,res) =>{
     try {
         const id = Domain.findOne({
