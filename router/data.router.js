@@ -16,7 +16,7 @@ router.post('/create',(req,res) =>{
 
 // api to set the data(subdomain data) in the Data table
 
-router.post('/data', (req,res)=>{
+router.post('/setdata', (req,res)=>{
     return dataController.setData(req,res)
 })
 
