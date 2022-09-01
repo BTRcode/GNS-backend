@@ -3,18 +3,11 @@ const app = express;
 const PORT = process.env.PORT || 5000;
 const Sequelize = require('sequelize');
 const router = require('./router')
-const db = require("./config/database.js")
-
-db.authenticate()
-    .then(() => {
-        console.log("database connected successfully")
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+const db = require("./src/models")
+db.sequelize.sync();
 
 
-app.use('/GNS', (req, res, next) => {
+app.use('/gns', (req, res, next) => {
     next();
 }, router);
 
