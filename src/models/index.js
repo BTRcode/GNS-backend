@@ -17,8 +17,6 @@ try {
   } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
   }
-  // initModels(sequelize);
-  // console.log('sequilize is', sequelize)
 
   fs
     .readdirSync(__dirname)

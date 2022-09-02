@@ -1,6 +1,7 @@
-const db = require("../models")
-const User = db.users;
+const initModels = require('../models/init-models');
 const _ = require('lodash');
+const { sequelize } = require('../models');
+const models = initModels(sequelize)
 const { successFormat, errorMsgFormat } = require('../utils/messageFormat.js')
 const { generateToken } = require('../utils/utils.js')
 

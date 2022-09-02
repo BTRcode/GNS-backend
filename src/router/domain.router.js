@@ -1,10 +1,10 @@
 const router = require('express').Router();
-const domainController = require('../controller/tld.controller');
-const domainValidation = require('../validation/tld.validation')
+const domainController = require('../controller/domain.controller');
+const domainValidation = require('../validation/domain.validation')
 const { validationFormat } = require('../utils/messageFormat')
 const auth = require('../utils/authenticate.js')
 
-router.get('/:tldId',(req,res)=>{
+router.get('/:domainId',(req,res)=>{
     return domainController.getDomain(req,res);
 })
 
@@ -20,3 +20,11 @@ router.post('/create',auth,(req,res)=>{
     }
     
 })
+
+router.put('/update/:domainId', auth , (req,res) => {
+    return domainController.updateDomain(req,res)
+})
+
+router.get('/delete/:domainId', auth, (req,res) => {
+    return domainController.deleteDomain(req,res)
+})         

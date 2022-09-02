@@ -1,11 +1,13 @@
-const db = require("../models")
-const Domains  = db.domains;
+const initModels = require('../models/init-models');
+const _ = require('lodash');
+const { sequelize } = require('../models');
+const models = initModels(sequelize)
 const { successFormat, errorMsgFormat } = require('../utils/messageFormat.js')
 
 exports.getDomain = async(req,res) =>{
     try {
         const { domain_id } = req.params;
-        const domain = await Domains.findOne({
+        const domain = await models.domains.findOne({
             where :{
                 id : domain_id
             },
@@ -36,20 +38,25 @@ exports.createDomain = async(req,res) =>{
         const {
             name,
             name_Hash,
-            tld_id,
+            tldName,
         } = req.body;
         const user_id = req.user.id
-        const _isExist = await Domains.findOne({
+        const tld = await models.tld.finOne({
+            where :{
+                tldName : tldName
+            }
+        })
+        const _isExist = await models.domains.findOne({
             where : {
-                tldName : name,
-                tldNameHash : name_Hash
+                user_id : user_id,
+                domainName : name,
             }
         })
         if(!_isExist){
-        await Domains.create({
+        await models.domains.create({
             domainName : name,
             domainNameHash : name_Hash,
-            tld_id : tld_id,
+            tld_id : tld.id,
             user_id : user_id
         })
         return res.send("TLD created successfully!!");
@@ -58,5 +65,21 @@ exports.createDomain = async(req,res) =>{
     }
     } catch (error) {
         return res.status(500).send(errorMsgFormat(error.message, 'TLD', 500))
+    }
+}
+
+exports.updatedomain = async(req,res) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
+exports.deleteDomain = async(req,res) => {
+    try {
+        
+    } catch (error) {
+        
     }
 }

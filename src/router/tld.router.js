@@ -2,12 +2,15 @@ const router = require('express').Router();
 const tldController = require('../controller/tld.controller');
 const tldValidation = require('../validation/tld.validation')
 const { validationFormat } = require('../utils/messageFormat')
+const admin = require('../utils/admin.js')
 
 router.get('/:tldId',(req,res)=>{
     return tldController.getTld(req,res);
 })
 
-router.post('/create',(req,res)=>{
+
+// only for the admins
+router.post('/create',admin,(req,res)=>{
     try {
         let { error } = tldValidation();
         if (error) {

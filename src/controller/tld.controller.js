@@ -1,11 +1,13 @@
-const db = require("../models")
-const Tlds = db.tld;
+const initModels = require('../models/init-models');
+const _ = require('lodash');
+const { sequelize } = require('../models');
+const models = initModels(sequelize)
 const { successFormat, errorMsgFormat } = require('../utils/messageFormat.js')
 
 exports.getTld = async(req,res) =>{
     try {
         const { tld_id } = req.params;
-        const tld = await Tlds.findOne({
+        const tld = await models.tld.findOne({
             where :{
                 id : tld_id
             },
@@ -28,14 +30,14 @@ exports.createTld = async(req,res) =>{
             name,
             name_Hash
         } = req.body;
-        const _isExist = await Tlds.findOne({
+        const _isExist = await models.tld.findOne({
             where : {
                 tldName : name,
                 tldNameHash : name_Hash
             }
         })
         if(!_isExist){
-        await Tlds.create({
+        await models.tld.create({
             tldName : name,
             tldNameHash : name_Hash
         })
